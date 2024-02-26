@@ -72,7 +72,7 @@ model = Sequential()
     model.add(Dense(num_classes))
     model.add(Activation('softmax'))
 
-weights = #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
+weights = '' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
 model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
 
 ### CNN Model END ###
