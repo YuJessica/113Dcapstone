@@ -11,7 +11,7 @@ from tensorflow.keras import datasets, layers, models
 
 ### Preprocess image START ###
 
-#Import the image(s) to be tested and 
+#Import the image(s) to be tested
 path = 'TODO/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
 listing = os.listdir(path)  
 np.size(listing)
@@ -72,7 +72,9 @@ model = Sequential()
     model.add(Dense(num_classes))
     model.add(Activation('softmax'))
 
-model.load_weights('my_model.weights.h5') #Load weights from the pre-trained model (Colab) 
+weights = #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
+model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
+
 ### CNN Model END ###
 
 ### Prediction START ###
@@ -88,4 +90,3 @@ elif(result == 3)
 elif(result == 4)
     # TODO: Code to light up LED 4
 ### Prediction END ###
-
