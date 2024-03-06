@@ -12,7 +12,7 @@ from tensorflow.keras import datasets, layers, models
 ### Preprocess image START ###
 
 #Import the image(s) to be tested
-path = '/mnt/usb/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
+path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
 listing = os.listdir(path)  
 np.size(listing)
 
@@ -72,7 +72,7 @@ model = Sequential()
     model.add(Dense(num_classes))
     model.add(Activation('softmax'))
 
-weights = '/mnt/usb/my_model.weights.h5' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
+weights = '/mnt/usb1/my_model.weights.h5' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
 model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
 
 ### CNN Model END ###
