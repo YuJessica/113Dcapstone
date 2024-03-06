@@ -54,23 +54,21 @@ from keras.layers import Convolution2D, MaxPooling2D
 from tensorflow.keras.optimizers import SGD,RMSprop,Adam
 
 model = Sequential()
-    model.add(Convolution2D(num_filters, num_conv, num_conv,
-                            'valid',
-                            input_shape=(img_cols, img_rows, 1)))
-    convout1 = Activation('relu')
-    model.add(convout1)
-    model.add(Convolution2D(num_filters, num_conv, num_conv))
-    convout2 = Activation('relu')
-    model.add(convout2)
-    model.add(MaxPooling2D(pool_size=(num_pool, num_pool)))
-    model.add(Dropout(0.5))
+model.add(Convolution2D(num_filters, num_conv, num_conv, 'valid', input_shape=(img_cols, img_rows, 1)))
+convout1 = Activation('relu')
+model.add(convout1)
+model.add(Convolution2D(num_filters, num_conv, num_conv))
+convout2 = Activation('relu')
+model.add(convout2)
+model.add(MaxPooling2D(pool_size=(num_pool, num_pool)))
+model.add(Dropout(0.5))
 
-    model.add(Flatten())
-    model.add(Dense(128))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes))
-    model.add(Activation('softmax'))
+model.add(Flatten())
+model.add(Dense(128))
+model.add(Activation('relu'))
+model.add(Dropout(0.5))
+model.add(Dense(num_classes))
+model.add(Activation('softmax'))
 
 weights = '/mnt/usb1/my_model.weights.h5' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
 model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
@@ -82,20 +80,15 @@ import gpiod
 import time
 
 LED = 0
-if(result == 0)
-    # TODO: Code to light up LED 0
+if result == 0:
     LED = 14
-elif(result == 1)
-    # TODO: Code to light up LED 1
+elif result == 1:
     LED = 15
-elif(result == 2)
-    # TODO: Code to light up LED 2
+elif result == 2:
     LED = 18
-elif(result == 3)
-    # TODO: Code to light up LED 3
+elif result == 3:
     LED = 23
-elif(result == 4)
-    # TODO: Code to light up LED 4
+elif result == 4:
     LED = 24
 
 chip = gpiod.Chip('gpiochip4')
