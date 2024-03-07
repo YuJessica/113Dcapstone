@@ -16,6 +16,8 @@ path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. '
 listing = os.listdir(path)  
 np.size(listing)
 
+print("Images found on USB")
+
 img_rows, img_cols = 200, 200 # input image dimensions
 immatrix = []
 
@@ -29,6 +31,7 @@ for file in listing:
     immatrix.append(np.array(gray).flatten())
 
 immatrix = np.asarray(immatrix)
+print("Image Pre-processed")
 ### Preprocess image END ###
 
 
@@ -72,7 +75,7 @@ model.add(Activation('softmax'))
 
 weights = '/mnt/usb1/my_model.weights.h5' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
 model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
-
+print("Model and Weights uploaded")
 ### CNN Model END ###
 
 ### Prediction START ###
@@ -97,6 +100,7 @@ led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 result = model.predict(immatrix)
 
 i = 0
+print("Displaying Result")
 try:
  while i<10:
     led_line.set_value(1)
