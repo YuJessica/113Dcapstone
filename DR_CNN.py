@@ -102,9 +102,10 @@ result = model.predict(immatrix)
 i = 0
 print("Displaying Result")
 try:
- while i<10:
+ while i<1:
     led_line.set_value(1)
-    time.sleep(1)
+    time.sleep(10)
+    led_line.set_value(0)
     i+=1
 finally:
  led_line.release()
