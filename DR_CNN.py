@@ -24,7 +24,7 @@ immatrix = []
 for file in listing:
     base = os.path.basename(path + file)
     fileName = os.path.splitext(base)[0]
-    im = Image.open(input + file)
+    im = Image.open(path + file)
     img = im.resize((img_rows,img_cols))
     gray = img.convert('L')
     immatrix.append(np.array(gray).flatten())
