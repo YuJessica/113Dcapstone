@@ -81,6 +81,8 @@ print("Model and Weights uploaded")
 import gpiod
 import time
 
+result = model.predict(immatrix)
+
 LED = 0
 if result == 0:
     LED = 14
@@ -96,7 +98,6 @@ elif result == 4:
 chip = gpiod.Chip('gpiochip4')
 led_line = chip.get_line(LED_PIN)
 led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
-result = model.predict(immatrix)
 
 i = 0
 print("Displaying Result")
