@@ -111,5 +111,5 @@ try:
     time.sleep(10)
     led_line.set_value(0)
 finally:
- led_line.release()
+    led_line.release()
 ### Prediction END ###
