@@ -23,9 +23,9 @@ imgMatrix = []
 
 for file in listing:
     baseImg = Image.open(path + file) # Base image
-    img = baseImg.resize((img_rows,img_cols))
-    gray = img.convert('L')
-    imgMatrix.append(np.array(gray))
+    img = baseImg.resize((img_rows,img_cols)) # Reduce image size to 200x200 pixels
+    grayImg = img.convert('L') # Convert image to grayscale
+    imgMatrix.append(np.array(grayImg)) # Append grayscaled image to a numpy matrix
 imgMatrix = np.asarray(imgMatrix)
 print("Image(s) Pre-processed")
 ### Preprocess image END ###
