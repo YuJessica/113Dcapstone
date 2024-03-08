@@ -97,12 +97,14 @@ match result:
     case 4: 
         LED = 24
         print("Proliferative diabetic retinopathy detected")
+    # Display an error message if none of the above classes are detected by the image
+    case _:
+        print("Error detected, image is assigned to unknown class/type.")
 
 chip = gpiod.Chip('gpiochip4')
 led_line = chip.get_line(LED_PIN)
 led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 
-i = 0
 print("Displaying Result")
 try:
     led_line.set_value(1)
@@ -110,5 +112,4 @@ try:
     led_line.set_value(0)
 finally:
  led_line.release()
-i = 0
 ### Prediction END ###
