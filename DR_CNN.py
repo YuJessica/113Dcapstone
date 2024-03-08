@@ -69,8 +69,7 @@ model.add(Dropout(0.5))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
-weights = '/mnt/usb1/my_model.weights.h5' #Path to .h5 file holding the weights
-model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
+model.load_weights('/mnt/usb1/my_model.weights.h5') #Load weights gathered from the pre-trained model (Colab)
 print("Model and Weights uploaded")
 ### CNN Model END ###
 
@@ -80,17 +79,24 @@ import time
 
 result = model.predict(imgMatrix)
 
+# Turn on Corresponding LED to display the result
 LED = 0
-if result == 0:
-    LED = 14
-elif result == 1:
-    LED = 15
-elif result == 2:
-    LED = 18
-elif result == 3:
-    LED = 23
-elif result == 4:
-    LED = 24
+match result:
+    case 0: 
+        LED = 14
+        print("No diabetic retinopathy detected")
+    case 1: 
+        LED = 15
+        print("Mild nonproliferative diabetic retinopathy detected")
+    case 2: 
+        LED = 18
+        print("Moderate nonproliferative diabetic retinopathy detected")
+    case 3: 
+        LED = 23
+        print("Severe nonproliferative diabetic retinopathy detected")
+    case 4: 
+        LED = 24
+        print("Proliferative diabetic retinopathy detected")
 
 chip = gpiod.Chip('gpiochip4')
 led_line = chip.get_line(LED_PIN)
@@ -99,11 +105,9 @@ led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 i = 0
 print("Displaying Result")
 try:
- while i<1:
     led_line.set_value(1)
     time.sleep(10)
     led_line.set_value(0)
-    i+=1
 finally:
  led_line.release()
 i = 0
