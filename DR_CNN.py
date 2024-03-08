@@ -1,4 +1,4 @@
-# TODO Import important libraries (im not sure if we need to import libraries)
+# TImport important libraries
 from PIL import Image
 from keras.preprocessing import image
 import os
@@ -19,18 +19,15 @@ np.size(listing)
 print("Images found on USB")
 
 img_rows, img_cols = 200, 200 # input image dimensions
-immatrix = []
+imgMatrix = []
 
 for file in listing:
-    base = os.path.basename(path + file)
-    fileName = os.path.splitext(base)[0]
-    im = Image.open(path + file)
-    img = im.resize((img_rows,img_cols))
+    baseImg = Image.open(path + file) # Base image
+    img = baseImg.resize((img_rows,img_cols))
     gray = img.convert('L')
-    immatrix.append(np.array(gray).flatten())
-
-immatrix = np.asarray(immatrix)
-print("Image Pre-processed")
+    imgMatrix.append(np.array(gray))
+imgMatrix = np.asarray(imgMatrix)
+print("Image(s) Pre-processed")
 ### Preprocess image END ###
 
 
@@ -38,7 +35,7 @@ print("Image Pre-processed")
 import matplotlib.pyplot as plt
 import matplotlib
 
-img=immatrix[0].reshape(img_rows,img_cols) 
+img=imgMatrix[0].reshape(img_rows,img_cols) 
 plt.imshow(img)
 plt.imshow(img,cmap='gray')
 ### Display Image END ###
@@ -72,7 +69,7 @@ model.add(Dropout(0.5))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
-weights = '/mnt/usb1/my_model.weights.h5' #TODO Path to .h5 file holding the weights (im not sure how to access files uploaded from github)
+weights = '/mnt/usb1/my_model.weights.h5' #Path to .h5 file holding the weights
 model.load_weights(weights) #Load weights from the pre-trained model (Colab) 
 print("Model and Weights uploaded")
 ### CNN Model END ###
@@ -81,7 +78,7 @@ print("Model and Weights uploaded")
 import gpiod
 import time
 
-result = model.predict(immatrix)
+result = model.predict(imgMatrix)
 
 LED = 0
 if result == 0:
