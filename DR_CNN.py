@@ -78,7 +78,7 @@ import gpiod
 import time
 
 result = model.predict(imgMatrix)
-
+print(result) # DELETE LATER, use for debugging
 # Turn on Corresponding LED to display the result
 LED = 0
 match result:
