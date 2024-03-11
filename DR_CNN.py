@@ -77,8 +77,11 @@ print("Model and Weights uploaded")
 import gpiod
 import time
 
-result = model.predict(imgMatrix)
-print(result) # DELETE LATER, use for debugging
+prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+result = prediction[0]
+for i in prediction
+    if prediction[i] > result: 
+        result = i
 # Turn on Corresponding LED to display the result
 LED = 0
 match result:
