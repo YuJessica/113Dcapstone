@@ -82,25 +82,24 @@ result = 0
 for idx in range(5):
     if prediction[0][idx] > result:
         result = idx
-print(result)
 # Turn on Corresponding LED to display the result
 LED = 0
 match result:
     case 0: 
         LED = 14
-        print("No diabetic retinopathy detected")
+        print("No diabetic retinopathy detected (type 0)")
     case 1: 
         LED = 15
-        print("Mild nonproliferative diabetic retinopathy detected")
+        print("Mild nonproliferative diabetic retinopathy detected (type 1)")
     case 2: 
         LED = 18
-        print("Moderate nonproliferative diabetic retinopathy detected")
+        print("Moderate nonproliferative diabetic retinopathy detected (type 2)")
     case 3: 
         LED = 23
-        print("Severe nonproliferative diabetic retinopathy detected")
+        print("Severe nonproliferative diabetic retinopathy detected (type 3)")
     case 4: 
         LED = 24
-        print("Proliferative diabetic retinopathy detected")
+        print("Proliferative diabetic retinopathy detected (type 4)")
     # Display an error message if none of the above classes are detected by the image
     case _:
         print("Error detected, image is assigned to unknown class/type.")
