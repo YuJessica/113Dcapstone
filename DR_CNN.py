@@ -78,12 +78,11 @@ import gpiod
 import time
 
 prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
-print(prediction)
 result = 0
-for i in range(4):
-    print(i)
-    if prediction[0][i] > result:
-        result = i
+for idx in range(5):
+    if prediction[0][idx] > result:
+        result = idx
+print("Prediction is type: " + result)
 # Turn on Corresponding LED to display the result
 LED = 0
 match result:
