@@ -82,7 +82,7 @@ print(prediction)
 result = 0
 for i in range(4):
     print(i)
-    if prediction[i] > result:
+    if prediction[0][i] > result:
         result = i
 # Turn on Corresponding LED to display the result
 LED = 0
