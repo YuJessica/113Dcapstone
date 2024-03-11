@@ -16,8 +16,6 @@ path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. '
 listing = os.listdir(path)  
 np.size(listing)
 
-print("Images found on USB")
-
 img_rows, img_cols = 200, 200 # input image dimensions
 imgMatrix = []
 
@@ -27,7 +25,7 @@ for file in listing:
     grayImg = img.convert('L') # Convert image to grayscale
     imgMatrix.append(np.array(grayImg)) # Append grayscaled image to a numpy matrix
 imgMatrix = np.asarray(imgMatrix)
-print("Image(s) Pre-processed")
+print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 
@@ -70,7 +68,6 @@ model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
 model.load_weights('/mnt/usb1/my_model.weights.h5') #Load weights gathered from the pre-trained model (Colab)
-print("Model and Weights uploaded")
 ### CNN Model END ###
 
 ### Prediction START ###
@@ -87,19 +84,19 @@ LED = 0
 match result:
     case 0: 
         LED = 14
-        print("No diabetic retinopathy detected (type 0)")
+        print("No diabetic retinopathy detected (type 0).")
     case 1: 
         LED = 15
-        print("Mild nonproliferative diabetic retinopathy detected (type 1)")
+        print("Mild nonproliferative diabetic retinopathy detected (type 1).")
     case 2: 
         LED = 18
-        print("Moderate nonproliferative diabetic retinopathy detected (type 2)")
+        print("Moderate nonproliferative diabetic retinopathy detected (type 2).")
     case 3: 
         LED = 23
-        print("Severe nonproliferative diabetic retinopathy detected (type 3)")
+        print("Severe nonproliferative diabetic retinopathy detected (type 3).")
     case 4: 
         LED = 24
-        print("Proliferative diabetic retinopathy detected (type 4)")
+        print("Proliferative diabetic retinopathy detected (type 4).")
     # Display an error message if none of the above classes are detected by the image
     case _:
         print("Error detected, image is assigned to unknown class/type.")
@@ -108,7 +105,6 @@ chip = gpiod.Chip('gpiochip4')
 led_line = chip.get_line(LED_PIN)
 led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 
-print("Displaying Result")
 try:
     led_line.set_value(1)
     time.sleep(10)
