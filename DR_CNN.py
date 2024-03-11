@@ -82,7 +82,7 @@ result = 0
 for idx in range(5):
     if prediction[0][idx] > result:
         result = idx
-print("Prediction is type: " + result)
+print(result)
 # Turn on Corresponding LED to display the result
 LED = 0
 match result:
