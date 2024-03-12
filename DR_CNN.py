@@ -40,34 +40,10 @@ plt.imshow(img,cmap='gray')
 
 
 ### CNN Model START ###
-num_filters = 32 # number of convolutional filters to use
-num_pool = 2 # size of pooling area for max pooling
-num_conv = 3 # convolution kernel size
 num_classes = 5 # number of output classes
 
-from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Convolution2D, MaxPooling2D
-from tensorflow.keras.optimizers import SGD,RMSprop,Adam
-
-model = Sequential()
-model.add(Convolution2D(num_filters, num_conv, num_conv, 'valid', input_shape=(img_cols, img_rows, 1)))
-convout1 = Activation('relu')
-model.add(convout1)
-model.add(Convolution2D(num_filters, num_conv, num_conv))
-convout2 = Activation('relu')
-model.add(convout2)
-model.add(MaxPooling2D(pool_size=(num_pool, num_pool)))
-model.add(Dropout(0.5))
-
-model.add(Flatten())
-model.add(Dense(128))
-model.add(Activation('relu'))
-model.add(Dropout(0.5))
-model.add(Dense(num_classes))
-model.add(Activation('softmax'))
-
-model.load_weights('/mnt/usb1/my_model.weights.h5') #Load weights gathered from the pre-trained model (Colab)
+from keras.models import load_model
+model = load_model('/mnt/usb1/my_model.keras') # Load Colab-trained model
 ### CNN Model END ###
 
 ### Prediction START ###
