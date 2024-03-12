@@ -102,8 +102,9 @@ match result:
     case _:
         print("Error detected, image is assigned to unknown class/type.")
 
+
 chip = gpiod.Chip('gpiochip4')
-led_line = chip.get_line(LED_PIN)
+led_line = chip.get_line(LED)
 led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 
 try:
