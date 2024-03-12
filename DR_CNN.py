@@ -75,6 +75,7 @@ import gpiod
 import time
 
 prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+print(prediction) # DELETE LATER
 result = 0
 for idx in range(num_classes):
     if prediction[0][idx] > result:
