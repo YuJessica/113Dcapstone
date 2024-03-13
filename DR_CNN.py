@@ -11,7 +11,7 @@ from tensorflow.keras import datasets, layers, models
 
 import gpiod
 import time
-chip = gpiod.Chip('gpiochip4')
+chip = gpiod.Chip('/dev/gpiochip4')
 
 ### Preprocess image START ###
 
