@@ -8,6 +8,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
+
+import gpiod
+import time
 chip = gpiod.Chip('gpiochip4')
 
 ### Preprocess image START ###
@@ -48,8 +51,7 @@ model = load_model('my_model.keras') # Load Colab-trained model
 ### CNN Model END ###
 
 ### Prediction START ###
-import gpiod
-import time
+
 
 prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
