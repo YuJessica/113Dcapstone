@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
+chip = gpiod.Chip('gpiochip4')
 
 ### Preprocess image START ###
 
@@ -79,7 +80,7 @@ match result:
         print("Error detected, image is assigned to unknown class/type.")
 
 
-chip = gpiod.Chip('gpiochip4')
+
 led_line = chip.get_line(LED)
 led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 
