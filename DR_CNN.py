@@ -43,7 +43,7 @@ plt.imshow(img,cmap='gray')
 num_classes = 5 # number of output classes
 
 from keras.models import load_model
-model = load_model('/mnt/usb1/my_model.keras') # Load Colab-trained model
+model = load_model('my_model.keras') # Load Colab-trained model
 ### CNN Model END ###
 
 ### Prediction START ###
