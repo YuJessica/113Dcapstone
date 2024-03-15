@@ -1,11 +1,9 @@
-# TImport important libraries
+# Import important libraries
 from PIL import Image
 from keras.preprocessing import image
 import os
 import numpy as np
 import pandas as pd
-
-import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 
@@ -16,47 +14,59 @@ import time
 import board
 import digitalio
 
+IMG_SIZE = 128
+num_classes = 5 # number of output classes
 
 ### Preprocess image START ###
+import cv2
+def crop_image_from_gray(img,tol=7):
+    if img.ndim ==2:
+        mask = img>tol
+        return img[np.ix_(mask.any(1),mask.any(0))]
+    elif img.ndim==3:
+        gray_img = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+        mask = gray_img>tol
+
+        check_shape = img[:,:,0][np.ix_(mask.any(1),mask.any(0))].shape[0]
+        if (check_shape == 0): # image is too dark so that we crop out everything,
+            return img # return original image
+        else:
+            img1=img[:,:,0][np.ix_(mask.any(1),mask.any(0))]
+            img2=img[:,:,1][np.ix_(mask.any(1),mask.any(0))]
+            img3=img[:,:,2][np.ix_(mask.any(1),mask.any(0))]
+            img = np.stack([img1,img2,img3],axis=-1)
+        return img
+
+def load_ben_color(path, sigmaX=10):
+    image = cv2.imread(path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    image = crop_image_from_gray(image)
+    image = cv2.resize(image, (IMG_SIZE, IMG_SIZE))
+    image = cv2.addWeighted ( image,4, cv2.GaussianBlur( image , (0,0) , sigmaX) ,-4 ,128)
+    return image
 
 #Import the image(s) to be tested
 path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
-listing = os.listdir(path)  
-np.size(listing)
+imgSet = os.listdir(path)  
 
-img_rows, img_cols = 200, 200 # input image dimensions
 imgMatrix = []
 
-for file in listing:
-    baseImg = Image.open(path + file) # Base image
-    img = baseImg.resize((img_rows,img_cols)) # Reduce image size to 200x200 pixels
-    grayImg = img.convert('L') # Convert image to grayscale
-    imgMatrix.append(np.array(grayImg)) # Append grayscaled image to a numpy matrix
+for img in imgSet:
+    processedImg = load_ben_color(path + img) 
+    imgMatrix.append(np.array(processedImg)) # Append grayscaled image to a numpy matrix
 imgMatrix = np.asarray(imgMatrix)
 print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 
-### Display Image START ###
-import matplotlib.pyplot as plt
-import matplotlib
-
-img=imgMatrix[0].reshape(img_rows,img_cols) 
-plt.imshow(img)
-plt.imshow(img,cmap='gray')
-### Display Image END ###
-
-
 ### CNN Model START ###
-num_classes = 5 # number of output classes
 
 from keras.models import load_model
 model = load_model('my_model.keras') # Load Colab-trained model
 ### CNN Model END ###
 
+
 ### Prediction START ###
-
-
 prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
 result = 0
