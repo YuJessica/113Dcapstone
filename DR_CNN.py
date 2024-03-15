@@ -9,9 +9,13 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 
-import gpiod
+#import gpiod
+#import time
+#chip = gpiod.Chip('/dev/gpiochip4')
 import time
-chip = gpiod.Chip('/dev/gpiochip4')
+import board
+import digitalio
+
 
 ### Preprocess image START ###
 
@@ -81,15 +85,42 @@ match result:
     case _:
         print("Error detected, image is assigned to unknown class/type.")
 
+print("press the button!")
+
+led0 = digitalio.DigitalInOut(board.D14)
+led0.direction = digitalio.Direction.OUTPUT
+
+led1 = digitalio.DigitalInOut(board.D15)
+led1.direction = digitalio.Direction.OUTPUT
+
+led2 = digitalio.DigitalInOut(board.D18)
+led2.direction = digitalio.Direction.OUTPUT
+
+led3 = digitalio.DigitalInOut(board.D23)
+led3.direction = digitalio.Direction.OUTPUT
+
+led4 = digitalio.DigitalInOut(board.D24)
+led4.direction = digitalio.Direction.OUTPUT
+
+button = digitalio.DigitalInOut(board.D4)
+button.direction = digitalio.Direction.INPUT
+button.pull = digitalio.Pull.UP
+
+while True:
+    led0.value = not button.value # light when button is pressed!
+    led1.value =  button.value
+    led2.value = not button.value
+    led3.value =  button.value
+    led4.value = not button.value
 
 
-led_line = chip.get_line(LED)
-led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
+#led_line = chip.get_line(LED)
+#led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
 
-try:
-    led_line.set_value(1)
-    time.sleep(10)
-    led_line.set_value(0)
-finally:
-    led_line.release()
+#try:
+#    led_line.set_value(1)
+#    time.sleep(10)
+#   led_line.set_value(0)
+#finally:
+ #   led_line.release()
 ### Prediction END ###
