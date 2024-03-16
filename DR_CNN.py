@@ -14,7 +14,7 @@ import time
 import board
 import digitalio
 
-IMG_SIZE = 128
+IMG_SIZE = 512
 num_classes = 5 # number of output classes
 
 ### Preprocess image START ###
