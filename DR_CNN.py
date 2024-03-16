@@ -5,6 +5,9 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
+from keras.models import Sequential, Model
+from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
+from keras.layers import GlobalAveragePooling2D, ZeroPadding2D, Input
 
 
 import time
