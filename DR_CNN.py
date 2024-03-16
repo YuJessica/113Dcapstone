@@ -58,8 +58,7 @@ print ("Image acquired and processed.")
 
 ### CNN Model START ###
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-from keras.models import load_model
-model = load_model('/mnt/usb1/mymodel.keras') # Load Colab-trained model
+model = tf.keras.models.load_model('/mnt/usb1/mymodel.keras') # Load Colab-trained model
 ### CNN Model END ###
 
 
