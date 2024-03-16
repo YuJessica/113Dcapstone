@@ -45,6 +45,12 @@ def load_ben_color(path, sigmaX=10):
     image = cv2.addWeighted (image,4, cv2.GaussianBlur(image , (0,0) , sigmaX) ,-4 ,128)
     return image
 
+def normalize(image,label):
+    #Normalizes individual pixels of images
+    image = tf.cast(image/255. ,tf.float32)
+    return image,label
+
+
 #Import the image(s) to be tested
 
 path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
@@ -72,6 +78,7 @@ imageSet = tf.keras.utils.image_dataset_from_directory(
            follow_links=False,
            crop_to_aspect_ratio=True
 )
+imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
 '''
 imgMatrix = []
 imgMatrix = np.asarray(imgMatrix)
