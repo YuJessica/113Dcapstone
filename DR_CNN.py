@@ -86,7 +86,7 @@ modelFile = 'mymodelv3.keras'
 usbPath = f"/mnt/usb1/{modelFile}"
 if not os.path.exists(modelFile):
     model = tf.keras.models.load_model(usbPath) # Load Colab-trained model from usb if not already on pi
-else
+else:
     model = tf.keras.models.load_model(modelFile) 
 
 ### CNN Model END ###
