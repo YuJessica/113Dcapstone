@@ -62,7 +62,7 @@ imageSet = tf.keras.utils.image_dataset_from_directory(
            labels= None,
            label_mode=None,
            class_names=None,
-           color_mode='grayscale',
+           color_mode='rgb',
            image_size=(IMG_SIZE, IMG_SIZE),
            shuffle=False,
            seed=None,
@@ -82,7 +82,7 @@ print ("Image acquired and processed.")
 
 ### CNN Model START ###
 from tensorflow.keras.applications.inception_v3 import InceptionV3
-model = tf.keras.models.load_model('/mnt/usb1/mymodel.keras') # Load Colab-trained model
+model = tf.keras.models.load_model('/mnt/usb1/mymodelv3.keras') # Load Colab-trained model
 ### CNN Model END ###
 
 
@@ -94,6 +94,10 @@ for idx in range(num_classes):
     if prediction[0][idx] > result:
         result = idx
 # Turn on Corresponding LED to display the result
+
+os.remove(file) for file in os.listdir("/mnt/usb1/processedImages") # Delete images stored in the temporary directory
+
+
 LED = 0
 match result:
     case 0: 
