@@ -42,19 +42,40 @@ def load_ben_color(path, sigmaX=10):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = crop_image_from_gray(image)
     image = cv2.resize(image, (IMG_SIZE, IMG_SIZE))
-    image = cv2.addWeighted ( image,4, cv2.GaussianBlur( image , (0,0) , sigmaX) ,-4 ,128)
+    image = cv2.addWeighted (image,4, cv2.GaussianBlur(image , (0,0) , sigmaX) ,-4 ,128)
     return image
 
 #Import the image(s) to be tested
+
 path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
 imgSet = os.listdir(path)  
-
-imgMatrix = []
-
+if not os.path.exists('/mnt/usb1/processedImages'):
+    os.mkdir('/mnt/usb1/processedImages') # Create a directory to hold processed images    
 for img in imgSet:
     processedImg = load_ben_color(path + img) 
-    imgMatrix.append(np.array(processedImg)) # Append grayscaled image to a numpy matrix
+    imgName = os.path.basename(img)
+    newpath = f"/mnt/usb1/processedImages/processed/{imgName}"
+    cv2.imwrite(newPath, processedImg)   # Save preprocessed images to another directory ...
+    
+images = tf.keras.utils.image_dataset_from_directory(
+           directory = "/mnt/usb1/processedImages",
+           labels= None,
+           label_mode=None,
+           class_names=None,
+           color_mode='rgb',
+           image_size=(IMG_SIZE, IMG_SIZE),
+           shuffle=False,
+           seed=None,
+           validation_split=None,
+           subset=None,
+           interpolation='bilinear',
+           follow_links=False,
+           crop_to_aspect_ratio=True
+)
+'''
+imgMatrix = []
 imgMatrix = np.asarray(imgMatrix)
+'''
 print ("Image acquired and processed.")
 ### Preprocess image END ###
 
