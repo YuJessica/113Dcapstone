@@ -57,7 +57,7 @@ for img in imgSet:
     newPath = f"/mnt/usb1/processedImages/processed{imgName}"
     cv2.imwrite(newPath, processedImg)   # Save preprocessed images to another directory ...
     
-images = tf.keras.utils.image_dataset_from_directory(
+imageSet = tf.keras.utils.image_dataset_from_directory(
            directory = "/mnt/usb1/processedImages",
            labels= None,
            label_mode=None,
@@ -87,7 +87,7 @@ model = tf.keras.models.load_model('/mnt/usb1/mymodel.keras') # Load Colab-train
 
 
 ### Prediction START ###
-prediction = model.predict(imgMatrix) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+prediction = model.predict(imageSet) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
 result = 0
 for idx in range(num_classes):
