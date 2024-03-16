@@ -54,7 +54,7 @@ if not os.path.exists('/mnt/usb1/processedImages'):
 for img in imgSet:
     processedImg = load_ben_color(path + img) 
     imgName = os.path.basename(img)
-    newPath = f"/mnt/usb1/processedImages/processed/{imgName}"
+    newPath = f"/mnt/usb1/processedImages/processed{imgName}"
     cv2.imwrite(newPath, processedImg)   # Save preprocessed images to another directory ...
     
 images = tf.keras.utils.image_dataset_from_directory(
