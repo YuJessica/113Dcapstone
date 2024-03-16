@@ -1,5 +1,4 @@
 # Import important libraries
-from PIL import Image
 from keras.preprocessing import image
 import os
 import numpy as np
