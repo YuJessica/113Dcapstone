@@ -95,7 +95,7 @@ for idx in range(num_classes):
         result = idx
 # Turn on Corresponding LED to display the result
 
-for file in os.listdir("/mnt/usb1/processedImages") # Delete images stored in the temporary directory
+for file in os.listdir("/mnt/usb1/processedImages"): # Delete images stored in the temporary directory
     os.remove(file) 
 
 
