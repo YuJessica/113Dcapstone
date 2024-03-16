@@ -7,9 +7,7 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
 
-#import gpiod
-#import time
-#chip = gpiod.Chip('/dev/gpiochip4')
+
 import time
 import board
 import digitalio
@@ -124,13 +122,4 @@ while True:
     led4.value = not button.value
 
 
-#led_line = chip.get_line(LED)
-#led_line.request(consumer="LED",type=gpiod.LINE_REQ_DIR_OUT)
-
-#try:
-#    led_line.set_value(1)
-#    time.sleep(10)
-#   led_line.set_value(0)
-#finally:
- #   led_line.release()
 ### Prediction END ###
