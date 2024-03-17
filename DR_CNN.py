@@ -3,12 +3,9 @@ import os
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import datasets, layers, models
-from keras.preprocessing import image
-from keras.models import Sequential, Model
 from keras.utils import Sequence
 from keras.utils import to_categorical
+from keras.models import Sequential, Model
 from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
 from keras.layers import GlobalAveragePooling2D, ZeroPadding2D, Input
 from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
