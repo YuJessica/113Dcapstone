@@ -139,7 +139,7 @@ model = Model(inputs = in_lay, outputs = [out_layer])
 model.compile(optimizer = 'adam', 
               loss = 'sparse_categorical_crossentropy',    
               metrics = ['sparse_categorical_accuracy'])
-model.load_weights('/mnt/usb1/mymodelFinal.weights.h5')
+model.load_weights('/mnt/usb1/mymodel.weights.h5')
 '''
 ### CNN Model END ###
 '''
