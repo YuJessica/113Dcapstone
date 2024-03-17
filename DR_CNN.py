@@ -45,10 +45,10 @@ def load_ben_color(path, sigmaX=10):
     image = cv2.addWeighted (image,4, cv2.GaussianBlur(image , (0,0) , sigmaX) ,-4 ,128)
     return image
 
-def normalize(image,label):
+def normalize(image):
     #Normalizes individual pixels of images
     image = tf.cast(image/255. ,tf.float32)
-    return image,label
+    return image
 
 
 #Import the image(s) to be tested
@@ -88,13 +88,11 @@ print ("Image acquired and processed.")
 
 
 ### CNN Model START ###
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-modelFile = 'mymodelv3.keras'
+
+modelFile = 'mymodelFinal.keras'
 usbPath = f"/mnt/usb1/{modelFile}"
-if not os.path.exists(modelFile):
-    model = tf.keras.models.load_model(usbPath) # Load Colab-trained model from usb if not already on pi
-else:
-    model = tf.keras.models.load_model(modelFile) 
+
+model = tf.keras.models.load_model(usbPath) # Load Colab-trained model from usb if not already on pi
 
 ### CNN Model END ###
 
