@@ -92,7 +92,7 @@ print ("Image acquired and processed.")
 modelFile = 'mymodelFinal.keras'
 usbPath = f"/mnt/usb1/{modelFile}"
 
-model = tf.keras.models.load_model(usbPath) # Load Colab-trained model from usb if not already on pi
+model = tf.keras.models.load_model(usbPath, safe_mode=False) # Load Colab-trained model from usb if not already on pi
 
 ### CNN Model END ###
 
