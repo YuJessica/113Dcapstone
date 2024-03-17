@@ -1,13 +1,17 @@
 # Import important libraries
-from keras.preprocessing import image
 import os
 import numpy as np
 import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import datasets, layers, models
+from keras.preprocessing import image
 from keras.models import Sequential, Model
+from keras.utils import Sequence
+from keras.utils import to_categorical
 from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
 from keras.layers import GlobalAveragePooling2D, ZeroPadding2D, Input
+from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_array, load_img
+from keras.optimizers import Adam
 
 
 import time
@@ -89,13 +93,57 @@ print ("Image acquired and processed.")
 
 ### CNN Model START ###
 
-modelFile = 'mymodelFinal.keras'
-usbPath = f"/mnt/usb1/{modelFile}"
+from tensorflow.keras.applications.inception_v3 import InceptionV3
 
-model = tf.keras.models.load_model(usbPath, safe_mode=False) # Load Colab-trained model from usb if not already on pi
+modelBase = InceptionV3(input_shape = (IMG_SIZE, IMG_SIZE, 3), # shape of input images (height, width, channels)
+                              include_top = False,             # top layer is specific to ImageNet competition; thus, should not be used for this model
+                              weights = 'imagenet'
+                              )
+# disable training of layers in the model to prevent overfitting data
+for layer in modelBase.layers:
+  layer.trainable = False
+from keras.layers import BatchNormalization, multiply, Lambda
 
+base_model = modelBase
+pt_depth = base_model.output_shape[-1]
+in_lay = Input(shape=(IMG_SIZE, IMG_SIZE, 3))
+pt_features = base_model(in_lay)
+bn_features = BatchNormalization()(pt_features)
+
+# here we do an attention mechanism to turn pixels in the GAP on an off
+
+attn_layer = Conv2D(64, kernel_size = (1,1), padding = 'same', activation = 'relu')(Dropout(0.5)(bn_features))
+attn_layer = Conv2D(16, kernel_size = (1,1), padding = 'same', activation = 'relu')(attn_layer)
+attn_layer = Conv2D(8, kernel_size = (1,1), padding = 'same', activation = 'relu')(attn_layer)
+attn_layer = Conv2D(1,
+                    kernel_size = (1,1),
+                    padding = 'valid',
+                    activation = 'sigmoid')(attn_layer)
+
+# fan it out to all of the channels
+up_c2_w = np.ones((1, 1, 1, pt_depth))
+up_c2 = Conv2D(pt_depth, kernel_size = (1,1), padding = 'same',
+               activation = 'linear', use_bias = False, weights = [up_c2_w])
+up_c2.trainable = False
+attn_layer = up_c2(attn_layer)
+mask_features = multiply([attn_layer, bn_features])
+gap_features = GlobalAveragePooling2D()(mask_features)
+gap_mask = GlobalAveragePooling2D()(attn_layer)
+# to account for missing values from the attention model
+gap = Lambda(lambda x: x[0]/x[1], name = 'RescaleGAP')([gap_features, gap_mask])
+gap_dr = Dropout(0.25)(gap)
+dr_steps = Dropout(0.25)(Dense(128, activation = 'relu')(gap_dr))
+out_layer = Dense(NUM_CLASSES, activation = 'softmax')(dr_steps)
+model = Model(inputs = in_lay, outputs = [out_layer])
+
+#tf.keras.optimizers.Adam(learning_rate = learning_rate)
+model.compile(optimizer = 'adam', 
+              loss = 'sparse_categorical_crossentropy',    
+              metrics = ['sparse_categorical_accuracy'])
+model.load_weights('mymodelFinal.weights.h5')
+'''
 ### CNN Model END ###
-
+'''
 
 ### Prediction START ###
 prediction = model.predict(imageSet) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
