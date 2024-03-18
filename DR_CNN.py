@@ -20,7 +20,7 @@ import board
 import digitalio
 
 IMG_SIZE = 512
-num_classes = 5 # number of output classes
+NUM_CLASSES = 5 # number of output classes
 
 ### Preprocess image START ###
 import cv2
