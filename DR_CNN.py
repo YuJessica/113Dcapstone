@@ -150,7 +150,7 @@ model.load_weights('/mnt/usb1/mymodel.weights.h5')
 prediction = model.predict(imageSet) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
 result = 0
-for idx in range(num_classes):
+for idx in range(NUM_CLASSES):
     if prediction[0][idx] > result:
         result = idx
 # Turn on Corresponding LED to display the result
