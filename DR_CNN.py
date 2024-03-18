@@ -2,7 +2,7 @@
 import os
 import numpy as np
 import pandas as pd
-import tensorflow.keras as tf
+import tensorflow as tf
 #import tensorflow._api.v2.compat.v1 
 from keras import datasets, layers, models
 #from keras.utils import Sequence
