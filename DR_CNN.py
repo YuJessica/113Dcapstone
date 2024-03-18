@@ -3,7 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models
+from keras import datasets, layers, models
 from keras.utils import Sequence
 from keras.utils import to_categorical
 from keras.models import Sequential, Model
