@@ -75,6 +75,7 @@ imageSet = image_dataset_from_directory(
            class_names=None,
            color_mode='rgb',
            image_size=(IMG_SIZE, IMG_SIZE),
+           batch_size=32,
            shuffle=False,
            seed=None,
            validation_split=None,
@@ -83,11 +84,8 @@ imageSet = image_dataset_from_directory(
            follow_links=False,
            crop_to_aspect_ratio=True
 )
-imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
-'''
-imgMatrix = []
-imgMatrix = np.asarray(imgMatrix)
-'''
+#imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
+
 print ("Image acquired and processed.")
 ### Preprocess image END ###
 
