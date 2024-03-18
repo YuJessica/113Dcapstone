@@ -5,7 +5,8 @@ import pandas as pd
 import tensorflow.keras as tf
 #import tensorflow._api.v2.compat.v1 
 from keras import datasets, layers, models
-from keras.utils import Sequence
+#from keras.utils import Sequence
+from keras.utils import Sequence, image_dataset_from_directory
 from keras.utils import to_categorical
 from keras.models import Sequential, Model
 from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
@@ -67,7 +68,7 @@ for img in imgSet:
     newPath = f"/mnt/usb1/processedImages/processed{imgName}"
     cv2.imwrite(newPath, processedImg)   # Save preprocessed images to another directory ...
     
-imageSet = tf.keras.utils.image_dataset_from_directory(
+imageSet = image_dataset_from_directory(
            directory = "/mnt/usb1/processedImages",
            labels= None,
            label_mode=None,
