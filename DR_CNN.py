@@ -122,7 +122,7 @@ print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 ### Prediction START ###
-testName = '45_left'
+testName = '54_left'
 testImage = loadImage(testName)
 prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
