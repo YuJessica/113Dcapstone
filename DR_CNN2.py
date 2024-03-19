@@ -174,7 +174,7 @@ for classNum in range(NUM_CLASSES)
                 led3.value = False
                 led4.value = False
                 
-            print(f"    For image from class {classNum}, {imgName}: Model guesses type {result} with a probability of {prediction[0][result]")
+            print(f"    For image from class {classNum}, {imgName}: Model guesses type {result} with a probability of {prediction[0][result]}.")
 
 #print("press the button!")
 
