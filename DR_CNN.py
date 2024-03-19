@@ -134,53 +134,65 @@ for idx in range(NUM_CLASSES):
 
 # Turn on Corresponding LED to display the result
 LED = 0
+led0 = digitalio.DigitalInOut(board.D15)
+led0.direction = digitalio.Direction.OUTPUT
+
+led1 = digitalio.DigitalInOut(board.D18)
+led1.direction = digitalio.Direction.OUTPUT
+
+led2 = digitalio.DigitalInOut(board.D23)
+led2.direction = digitalio.Direction.OUTPUT
+
+led3 = digitalio.DigitalInOut(board.D24)
+led3.direction = digitalio.Direction.OUTPUT
+
+led4 = digitalio.DigitalInOut(board.D25)
+led4.direction = digitalio.Direction.OUTPUT
+
 match result:
     case 0: 
-        LED = 14
+        LED = 15
+        led0.value = button.value
         print("No diabetic retinopathy detected (type 0).")
     case 1: 
-        LED = 15
+        LED = 18
+        led1.value = button.value
         print("Mild nonproliferative diabetic retinopathy detected (type 1).")
     case 2: 
-        LED = 18
+        LED = 23
+        led2.value = button.value
         print("Moderate nonproliferative diabetic retinopathy detected (type 2).")
     case 3: 
-        LED = 23
+        LED = 24
+        led3.value = button.value
         print("Severe nonproliferative diabetic retinopathy detected (type 3).")
     case 4: 
-        LED = 24
+        LED = 25
+        led4.value = button.value
         print("Proliferative diabetic retinopathy detected (type 4).")
     # Display an error message if none of the above classes are detected by the image
     case _:
         print("Error detected, image is assigned to unknown class/type.")
+        led0.value = not button.value # light when button is pressed!
+        led1.value = not button.value
+        led2.value = not button.value
+        led3.value = not button.value
+        led4.value = not button.value
 
-print("press the button!")
+#print("press the button!")
 
-led0 = digitalio.DigitalInOut(board.D14)
-led0.direction = digitalio.Direction.OUTPUT
 
-led1 = digitalio.DigitalInOut(board.D15)
-led1.direction = digitalio.Direction.OUTPUT
 
-led2 = digitalio.DigitalInOut(board.D18)
-led2.direction = digitalio.Direction.OUTPUT
+#button = digitalio.DigitalInOut(board.D4)
+#button.direction = digitalio.Direction.INPUT
+#button.pull = digitalio.Pull.UP
 
-led3 = digitalio.DigitalInOut(board.D23)
-led3.direction = digitalio.Direction.OUTPUT
-
-led4 = digitalio.DigitalInOut(board.D24)
-led4.direction = digitalio.Direction.OUTPUT
-
-button = digitalio.DigitalInOut(board.D4)
-button.direction = digitalio.Direction.INPUT
-button.pull = digitalio.Pull.UP
-
-while True:
-    led0.value = not button.value # light when button is pressed!
-    led1.value =  button.value
-    led2.value = not button.value
-    led3.value =  button.value
-    led4.value = not button.value
+#while True:
+#   led0.value = not button.value # light when button is pressed!
+#  led1.value =  button.value
+#    led2.value = not button.value
+#    led3.value =  button.value
+#    led4.value = not button.value
 
 
 ### Prediction END ###
