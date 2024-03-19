@@ -109,7 +109,7 @@ model.load_weights('/mnt/usb1/mymodel.weights.h5')
 
 #Import the image(s) to be tested
 def loadImage(name): #name is basename of image, e.g., 16_right
-    path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
+    path = '/mnt/usb1/images/2/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
     imgSet = os.listdir(path)   
     imgName = f'{name}.jpeg' # Image name to be processed
     image = load_ben_color(path + imgName) 
