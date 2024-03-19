@@ -133,6 +133,7 @@ led3.direction = digitalio.Direction.OUTPUT
 
 led4 = digitalio.DigitalInOut(board.D25)
 led4.direction = digitalio.Direction.OUTPUT
+
 for classNum in range(NUM_CLASSES):
     print(f"Testing images of type {classNum}.")
     folderPath = f'/mnt/usb1/images/{classNum}/'
