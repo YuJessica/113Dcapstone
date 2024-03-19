@@ -140,48 +140,49 @@ for classNum in range(NUM_CLASSES):
     for imgFile in os.listdir(folderPath):
         imgName = os.path.basename(imgFile)
         if not (imgName.endswith(".jpeg")):
-            break
-        testImage = loadImage(imgName, folderPath)
-        prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
-                
-        # Turn on Corresponding LED to display the result
-        result = 0
-        for idx in range(NUM_CLASSES):
-            #print(f"The probability of class {idx} is {prediction[0][idx]}") #DEBUGGING
-            if prediction[0][idx] >= prediction[0][result]:
-                result = idx
-                
-        match result:
-            case 0: 
-                led0.value = True        
-                time.sleep(3)
-                led0.value = False
-            case 1: 
-                led1.value = True
-                time.sleep(3)
-                led1.value = False
-            case 2: 
-                led2.value = True
-                time.sleep(3)
-                led2.value = False
-            case 3: 
-                led3.value = True
-                time.sleep(3)
-                led3.value = False
-            case 4: 
-                led4.value = True
-                time.sleep(3)
-                led4.value = False
-            # Display an error message if none of the above classes are detected by the image
-            case _:
-                print("Error detected, image is assigned to unknown class/type.")
-                led0.value = False # light when button is pressed!
-                led1.value = False
-                led2.value = False
-                led3.value = False
-                led4.value = False
-                
-        print(f"    {imgName}: Model guesses type {result} with a probability of {prediction[0][result]}.")
+            continue
+        else:
+            testImage = loadImage(imgName, folderPath)
+            prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+                    
+            # Turn on Corresponding LED to display the result
+            result = 0
+            for idx in range(NUM_CLASSES):
+                #print(f"The probability of class {idx} is {prediction[0][idx]}") #DEBUGGING
+                if prediction[0][idx] >= prediction[0][result]:
+                    result = idx
+                    
+            match result:
+                case 0: 
+                    led0.value = True        
+                    time.sleep(3)
+                    led0.value = False
+                case 1: 
+                    led1.value = True
+                    time.sleep(3)
+                    led1.value = False
+                case 2: 
+                    led2.value = True
+                    time.sleep(3)
+                    led2.value = False
+                case 3: 
+                    led3.value = True
+                    time.sleep(3)
+                    led3.value = False
+                case 4: 
+                    led4.value = True
+                    time.sleep(3)
+                    led4.value = False
+                # Display an error message if none of the above classes are detected by the image
+                case _:
+                    print("Error detected, image is assigned to unknown class/type.")
+                    led0.value = False # light when button is pressed!
+                    led1.value = False
+                    led2.value = False
+                    led3.value = False
+                    led4.value = False
+                    
+            print(f"    {imgName}: Model guesses type {result} with a probability of {prediction[0][result]}.")
 
 #print("press the button!")
 
