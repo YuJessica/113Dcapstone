@@ -125,7 +125,7 @@ print ("Image acquired and processed.")
 testName = '54_left'
 testImage = loadImage(testName)
 prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
-print(prediction) # DELETE LATER
+#print(prediction) # DELETE LATER
 result = 0
 
 for idx in range(NUM_CLASSES):
