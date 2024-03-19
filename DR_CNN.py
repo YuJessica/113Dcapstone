@@ -129,7 +129,7 @@ print(prediction) # DELETE LATER
 result = 0
 
 for idx in range(NUM_CLASSES):
-    if prediction[0][idx] > result:
+    if prediction[0][idx] >= result:
         result = idx
 
 # Turn on Corresponding LED to display the result
