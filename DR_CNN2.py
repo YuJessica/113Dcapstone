@@ -125,7 +125,7 @@ for classNum in range(NUM_CLASSES):
     for imgFile in os.listdir(folderPath):
         imgName = os.path.basename(imgFile)
         testImage = loadImage(imgName, folderPath)
-        prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+        prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
                 
         # Turn on Corresponding LED to display the result
         led0 = digitalio.DigitalInOut(board.D15)
