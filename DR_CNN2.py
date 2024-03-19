@@ -140,12 +140,12 @@ for classNum in range(NUM_CLASSES):
     folderPath = f'/mnt/usb1/images/{classNum}/'
     for imgFile in os.listdir(folderPath):
         imgName = os.path.basename(imgFile)
+        if not (imgName.endswith(".jpeg")):
+            break
         testImage = loadImage(imgName, folderPath)
         prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
                 
         # Turn on Corresponding LED to display the result
-
-
         result = 0
         for idx in range(NUM_CLASSES):
             #print(f"The probability of class {idx} is {prediction[0][idx]}") #DEBUGGING
