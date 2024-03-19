@@ -55,10 +55,10 @@ def normalize(image):
     image = tf.cast(image/255. ,tf.float32)
     return image
     
-def loadImage(name): #name is basename of image, e.g., 16_right
-    path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab)  
+def loadImage(name, folderPath): 
+    #name is basename of image, e.g., 16_right
     imgName = f'{name}.jpeg' # Image name to be processed
-    image = load_ben_color(path + imgName) 
+    image = load_ben_color(folderPath + imgName) 
     image = np.expand_dims(image, axis=0) # Convert image to tensor
     image = normalize(image)
     return image
@@ -121,9 +121,10 @@ print ("Image acquired and processed.")
 ### Prediction START ###
 for classNum in range(NUM_CLASSES):
     print(f"Testing images of type {classNum}.")
-    for imageFile in os.listdir(f'/mnt/usb1/images/{classNum}/'):
-        imgName = os.path.basename(imageFile)
-        testImage = loadImage(imgName)
+    folderPath = f'/mnt/usb1/images/{classNum}/'
+    for imgFile in os.listdir(folderPath):
+        imgName = os.path.basename(imgFile)
+        testImage = loadImage(imgName, folderPath)
         prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
                 
         # Turn on Corresponding LED to display the result
