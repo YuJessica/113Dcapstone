@@ -22,7 +22,7 @@ import digitalio
 IMG_SIZE = 512
 NUM_CLASSES = 5 # number of output classes
 
-### Preprocess image START ###
+### Auxilary Functions START ###
 import cv2
 def crop_image_from_gray(img,tol=7):
     if img.ndim ==2:
@@ -54,41 +54,6 @@ def normalize(image):
     #Normalizes individual pixels of images
     image = tf.cast(image/255. ,tf.float32)
     return image
-
-
-#Import the image(s) to be tested
-
-path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
-imgSet = os.listdir(path)  
-if not os.path.exists('/mnt/usb1/processedImages'):
-    os.mkdir('/mnt/usb1/processedImages') # Create a directory to hold processed images    
-for img in imgSet:
-    processedImg = load_ben_color(path + img) 
-    imgName = os.path.basename(img)
-    newPath = f"/mnt/usb1/processedImages/processed{imgName}"
-    cv2.imwrite(newPath, processedImg)   # Save preprocessed images to another directory ...
-    
-imageSet = image_dataset_from_directory(
-           directory = "/mnt/usb1/processedImages",
-           labels= None,
-           label_mode=None,
-           class_names=None,
-           color_mode='rgb',
-           image_size=(IMG_SIZE, IMG_SIZE),
-           batch_size=1,
-           shuffle=False,
-           seed=None,
-           validation_split=None,
-           subset=None,
-           interpolation='bilinear',
-           follow_links=False,
-           crop_to_aspect_ratio=True
-)
-#imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
-
-print ("Image acquired and processed.")
-### Preprocess image END ###
-
 
 ### CNN Model START ###
 
@@ -135,17 +100,30 @@ dr_steps = Dropout(0.25)(Dense(128, activation = 'relu')(gap_dr))
 out_layer = Dense(NUM_CLASSES, activation = 'softmax')(dr_steps)
 model = Model(inputs = in_lay, outputs = [out_layer])
 
-#tf.keras.optimizers.Adam(learning_rate = learning_rate)
 model.compile(optimizer = 'adam', 
               loss = 'sparse_categorical_crossentropy',    
               metrics = ['sparse_categorical_accuracy'])
 model.load_weights('/mnt/usb1/mymodel.weights.h5')
-'''
+
 ### CNN Model END ###
-'''
+
+#Import the image(s) to be tested
+def loadImage(name): #name is basename of image, e.g., 16_right
+    path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
+    imgSet = os.listdir(path)   
+    imgName = f'{name}.jpeg' # Image name to be processed
+    image = load_ben_color(path + imgName) 
+    image = np.expand_dims(image, axis=0) # Convert image to tensor
+    image = normalize(image)
+    return image
+#imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
+
+print ("Image acquired and processed.")
+### Preprocess image END ###
 
 ### Prediction START ###
-prediction = model.predict(imageSet) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+testImage = '45_left'
+prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
 result = 0
 for idx in range(NUM_CLASSES):
