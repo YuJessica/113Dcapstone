@@ -119,9 +119,9 @@ print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 ### Prediction START ###
-for classNum in range(NUM_CLASSES)
+for classNum in range(NUM_CLASSES):
     print(f"Testing images of type {classNum}.")
-    for imageFile in os.listdir(f'/mnt/usb1/images/{classNum}/')
+    for imageFile in os.listdir(f'/mnt/usb1/images/{classNum}/'):
         imgName = os.path.basename(imageFile)
         testImage = loadImage(imgName)
         prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
