@@ -157,22 +157,32 @@ match result:
         LED = 15
         led0.value = True
         print("No diabetic retinopathy detected (type 0).")
+        time.sleep(5)
+        led0.value = False
     case 1: 
         LED = 18
         led1.value = True
         print("Mild nonproliferative diabetic retinopathy detected (type 1).")
+        time.sleep(5)
+        led1.value = False
     case 2: 
         LED = 23
         led2.value = True
         print("Moderate nonproliferative diabetic retinopathy detected (type 2).")
+        time.sleep(5)
+        led2.value = False
     case 3: 
         LED = 24
         led3.value = True
         print("Severe nonproliferative diabetic retinopathy detected (type 3).")
+        time.sleep(5)
+        led3.value = False
     case 4: 
         LED = 25
         led4.value = True
         print("Proliferative diabetic retinopathy detected (type 4).")
+        time.sleep(5)
+        led4.value = False
     # Display an error message if none of the above classes are detected by the image
     case _:
         print("Error detected, image is assigned to unknown class/type.")
