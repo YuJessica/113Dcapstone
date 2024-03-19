@@ -55,9 +55,9 @@ def normalize(image):
     image = tf.cast(image/255. ,tf.float32)
     return image
     
-def loadImage(name, folderPath): 
-    #name is basename of image, e.g., 16_right
-    imgName = f'{name}.jpeg' # Image name to be processed
+def loadImage(imgName, folderPath): 
+    # name is basename of image, e.g., 16_right.jpeg
+    # folderPath is path to directory of images
     image = load_ben_color(folderPath + imgName) 
     image = np.expand_dims(image, axis=0) # Convert image to tensor
     image = normalize(image)
