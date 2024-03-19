@@ -128,7 +128,6 @@ for classNum in range(NUM_CLASSES):
         prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
                 
         # Turn on Corresponding LED to display the result
-        LED = 0
         led0 = digitalio.DigitalInOut(board.D15)
         led0.direction = digitalio.Direction.OUTPUT
         
@@ -152,27 +151,22 @@ for classNum in range(NUM_CLASSES):
                 
         match result:
             case 0: 
-                LED = 15
                 led0.value = True        
                 time.sleep(3)
                 led0.value = False
             case 1: 
-                LED = 18
                 led1.value = True
                 time.sleep(3)
                 led1.value = False
             case 2: 
-                LED = 23
                 led2.value = True
                 time.sleep(3)
                 led2.value = False
             case 3: 
-                LED = 24
                 led3.value = True
                 time.sleep(3)
                 led3.value = False
             case 4: 
-                LED = 25
                 led4.value = True
                 time.sleep(3)
                 led4.value = False
