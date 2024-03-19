@@ -132,7 +132,7 @@ for idx in range(NUM_CLASSES):
     print(f"The probability of class {idx} is {prediction[0][idx]}")
     if prediction[0][idx] >= result:
         result = idx
-        print(f"and the current guess is {result}"
+        print(f"and the current guess is {result}")
 
 print(result)
 # Turn on Corresponding LED to display the result
