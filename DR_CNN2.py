@@ -119,6 +119,20 @@ print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 ### Prediction START ###
+led0 = digitalio.DigitalInOut(board.D15)
+led0.direction = digitalio.Direction.OUTPUT
+
+led1 = digitalio.DigitalInOut(board.D18)
+led1.direction = digitalio.Direction.OUTPUT
+
+led2 = digitalio.DigitalInOut(board.D23)
+led2.direction = digitalio.Direction.OUTPUT
+
+led3 = digitalio.DigitalInOut(board.D24)
+led3.direction = digitalio.Direction.OUTPUT
+
+led4 = digitalio.DigitalInOut(board.D25)
+led4.direction = digitalio.Direction.OUTPUT
 for classNum in range(NUM_CLASSES):
     print(f"Testing images of type {classNum}.")
     folderPath = f'/mnt/usb1/images/{classNum}/'
@@ -128,20 +142,7 @@ for classNum in range(NUM_CLASSES):
         prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
                 
         # Turn on Corresponding LED to display the result
-        led0 = digitalio.DigitalInOut(board.D15)
-        led0.direction = digitalio.Direction.OUTPUT
-        
-        led1 = digitalio.DigitalInOut(board.D18)
-        led1.direction = digitalio.Direction.OUTPUT
-        
-        led2 = digitalio.DigitalInOut(board.D23)
-        led2.direction = digitalio.Direction.OUTPUT
-        
-        led3 = digitalio.DigitalInOut(board.D24)
-        led3.direction = digitalio.Direction.OUTPUT
-        
-        led4 = digitalio.DigitalInOut(board.D25)
-        led4.direction = digitalio.Direction.OUTPUT
+
 
         result = 0
         for idx in range(NUM_CLASSES):
