@@ -59,6 +59,7 @@ def loadImage(imgName, folderPath):
     # name is basename of image, e.g., 16_right.jpeg
     # folderPath is path to directory of images
     image = load_ben_color(folderPath + imgName) 
+    print(folderPath + imgName)
     image = np.expand_dims(image, axis=0) # Convert image to tensor
     image = normalize(image)
     return image
@@ -138,7 +139,6 @@ for classNum in range(NUM_CLASSES):
     print(f"Testing images of type {classNum}.")
     folderPath = f'/mnt/usb1/images/{classNum}/'
     for imgFile in os.listdir(folderPath):
-        print(folderPath)
         imgName = os.path.basename(imgFile)
         testImage = loadImage(imgName, folderPath)
         prediction = model.predict(testImage, verbose = 0) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
