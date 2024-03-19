@@ -129,6 +129,7 @@ print(prediction) # DELETE LATER
 result = 0
 
 for idx in range(NUM_CLASSES):
+    print(idx)
     if prediction[0][idx] >= result:
         result = idx
 
