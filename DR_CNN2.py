@@ -152,19 +152,29 @@ for classNum in range(NUM_CLASSES):
         match result:
             case 0: 
                 LED = 15
-                led0.value = True
+                led0.value = True        
+                time.sleep(3)
+                led0.value = False
             case 1: 
                 LED = 18
                 led1.value = True
+                time.sleep(3)
+                led1.value = False
             case 2: 
                 LED = 23
                 led2.value = True
+                time.sleep(3)
+                led2.value = False
             case 3: 
                 LED = 24
                 led3.value = True
+                time.sleep(3)
+                led3.value = False
             case 4: 
                 LED = 25
                 led4.value = True
+                time.sleep(3)
+                led4.value = False
             # Display an error message if none of the above classes are detected by the image
             case _:
                 print("Error detected, image is assigned to unknown class/type.")
