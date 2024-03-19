@@ -155,23 +155,23 @@ for classNum in range(NUM_CLASSES):
             match result:
                 case 0: 
                     led0.value = True        
-                    time.sleep(3)
+                    time.sleep(2)
                     led0.value = False
                 case 1: 
                     led1.value = True
-                    time.sleep(3)
+                    time.sleep(2)
                     led1.value = False
                 case 2: 
                     led2.value = True
-                    time.sleep(3)
+                    time.sleep(2)
                     led2.value = False
                 case 3: 
                     led3.value = True
-                    time.sleep(3)
+                    time.sleep(2)
                     led3.value = False
                 case 4: 
                     led4.value = True
-                    time.sleep(3)
+                    time.sleep(2)
                     led4.value = False
                 # Display an error message if none of the above classes are detected by the image
                 case _:
