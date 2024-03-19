@@ -146,7 +146,7 @@ for classNum in range(NUM_CLASSES):
 
         result = 0
         for idx in range(NUM_CLASSES):
-            print(f"The probability of class {idx} is {prediction[0][idx]}")
+            #print(f"The probability of class {idx} is {prediction[0][idx]}") #DEBUGGING
             if prediction[0][idx] >= prediction[0][result]:
                 result = idx
                 
