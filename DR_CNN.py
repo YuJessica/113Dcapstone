@@ -127,15 +127,12 @@ testImage = loadImage(testName)
 prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
 print(prediction) # DELETE LATER
 result = 0
+
 for idx in range(NUM_CLASSES):
     if prediction[0][idx] > result:
         result = idx
+
 # Turn on Corresponding LED to display the result
-
-for file in os.listdir("/mnt/usb1/processedImages"): # Delete images stored in the temporary directory
-    os.remove(file) 
-
-
 LED = 0
 match result:
     case 0: 
