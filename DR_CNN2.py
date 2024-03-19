@@ -54,7 +54,14 @@ def normalize(image):
     #Normalizes individual pixels of images
     image = tf.cast(image/255. ,tf.float32)
     return image
-
+    
+def loadImage(name): #name is basename of image, e.g., 16_right
+    path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab)  
+    imgName = f'{name}.jpeg' # Image name to be processed
+    image = load_ben_color(path + imgName) 
+    image = np.expand_dims(image, axis=0) # Convert image to tensor
+    image = normalize(image)
+    return image
 ### CNN Model START ###
 
 from tensorflow.keras.applications.inception_v3 import InceptionV3
@@ -107,80 +114,66 @@ model.load_weights('/mnt/usb1/mymodel.weights.h5')
 
 ### CNN Model END ###
 
-#Import the image(s) to be tested
-def loadImage(name): #name is basename of image, e.g., 16_right
-    path = '/mnt/usb1/images/' # Path to folder containing images in storage (e.g. 'diabetic-retinopathy-resized/resized_train/resized_train/' is what we used in the colab) 
-    imgSet = os.listdir(path)   
-    imgName = f'{name}.jpeg' # Image name to be processed
-    image = load_ben_color(path + imgName) 
-    image = np.expand_dims(image, axis=0) # Convert image to tensor
-    image = normalize(image)
-    return image
-#imageSet = imageSet.map(normalize) # apply normalization function to the entire datasets
 
 print ("Image acquired and processed.")
 ### Preprocess image END ###
 
 ### Prediction START ###
-testName = '54_left'
-testImage = loadImage(testName)
-prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
-print(prediction) # DELETE LATER
-result = 0
+for classNum in range(NUM_CLASSES)
+    print(f"Testing images of type {classNum}.")
+    for imageFile in os.listdir(f'/mnt/usb1/images/{classNum}/')
+        imgName = os.path.basename(imageFile)
+        testImage = loadImage(imgName)
+        prediction = model.predict(testImage) # outputs an array of size equal to the number of classes (5), predicted result is the ith index
+                
+        # Turn on Corresponding LED to display the result
+        LED = 0
+        led0 = digitalio.DigitalInOut(board.D15)
+        led0.direction = digitalio.Direction.OUTPUT
+        
+        led1 = digitalio.DigitalInOut(board.D18)
+        led1.direction = digitalio.Direction.OUTPUT
+        
+        led2 = digitalio.DigitalInOut(board.D23)
+        led2.direction = digitalio.Direction.OUTPUT
+        
+        led3 = digitalio.DigitalInOut(board.D24)
+        led3.direction = digitalio.Direction.OUTPUT
+        
+        led4 = digitalio.DigitalInOut(board.D25)
+        led4.direction = digitalio.Direction.OUTPUT
 
-for idx in range(NUM_CLASSES):
-    print(f"The probability of class {idx} is {prediction[0][idx]}")
-    if prediction[0][idx] >= prediction[0][result]:
-        result = idx
-        print(f"and the current guess is {result}")
-
-print(result)
-# Turn on Corresponding LED to display the result
-LED = 0
-led0 = digitalio.DigitalInOut(board.D15)
-led0.direction = digitalio.Direction.OUTPUT
-
-led1 = digitalio.DigitalInOut(board.D18)
-led1.direction = digitalio.Direction.OUTPUT
-
-led2 = digitalio.DigitalInOut(board.D23)
-led2.direction = digitalio.Direction.OUTPUT
-
-led3 = digitalio.DigitalInOut(board.D24)
-led3.direction = digitalio.Direction.OUTPUT
-
-led4 = digitalio.DigitalInOut(board.D25)
-led4.direction = digitalio.Direction.OUTPUT
-
-match result:
-    case 0: 
-        LED = 15
-        led0.value = True
-        print("No diabetic retinopathy detected (type 0).")
-    case 1: 
-        LED = 18
-        led1.value = True
-        print("Mild nonproliferative diabetic retinopathy detected (type 1).")
-    case 2: 
-        LED = 23
-        led2.value = True
-        print("Moderate nonproliferative diabetic retinopathy detected (type 2).")
-    case 3: 
-        LED = 24
-        led3.value = True
-        print("Severe nonproliferative diabetic retinopathy detected (type 3).")
-    case 4: 
-        LED = 25
-        led4.value = True
-        print("Proliferative diabetic retinopathy detected (type 4).")
-    # Display an error message if none of the above classes are detected by the image
-    case _:
-        print("Error detected, image is assigned to unknown class/type.")
-        led0.value = False # light when button is pressed!
-        led1.value = False
-        led2.value = False
-        led3.value = False
-        led4.value = False
+        result = 0
+        for idx in range(NUM_CLASSES):
+            print(f"The probability of class {idx} is {prediction[0][idx]}")
+            if prediction[0][idx] >= prediction[0][result]:
+                result = idx
+                
+        match result:
+            case 0: 
+                LED = 15
+                led0.value = True
+            case 1: 
+                LED = 18
+                led1.value = True
+            case 2: 
+                LED = 23
+                led2.value = True
+            case 3: 
+                LED = 24
+                led3.value = True
+            case 4: 
+                LED = 25
+                led4.value = True
+        print(f"    For image from class {classNum}, {imgName}: Model guesses type {result} with a probability of {prediction[0][result]")
+            # Display an error message if none of the above classes are detected by the image
+            case _:
+                print("Error detected, image is assigned to unknown class/type.")
+                led0.value = False # light when button is pressed!
+                led1.value = False
+                led2.value = False
+                led3.value = False
+                led4.value = False
 
 #print("press the button!")
 
