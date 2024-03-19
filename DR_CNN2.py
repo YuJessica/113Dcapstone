@@ -165,7 +165,6 @@ for classNum in range(NUM_CLASSES)
             case 4: 
                 LED = 25
                 led4.value = True
-        print(f"    For image from class {classNum}, {imgName}: Model guesses type {result} with a probability of {prediction[0][result]")
             # Display an error message if none of the above classes are detected by the image
             case _:
                 print("Error detected, image is assigned to unknown class/type.")
@@ -174,6 +173,8 @@ for classNum in range(NUM_CLASSES)
                 led2.value = False
                 led3.value = False
                 led4.value = False
+                
+            print(f"    For image from class {classNum}, {imgName}: Model guesses type {result} with a probability of {prediction[0][result]")
 
 #print("press the button!")
 
