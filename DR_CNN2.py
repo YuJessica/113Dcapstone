@@ -58,7 +58,6 @@ def normalize(image):
 def loadImage(imgName, folderPath): 
     # name is basename of image, e.g., 16_right.jpeg
     # folderPath is path to directory of images
-    print(folderPath + imgName)
     image = load_ben_color(folderPath + imgName) 
     image = np.expand_dims(image, axis=0) # Convert image to tensor
     image = normalize(image)
